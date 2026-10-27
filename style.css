@@ -1,0 +1,418 @@
+/* ==========================================================
+   PlayDev · Desafio Flexbox (DIO)
+   Identidade própria: base azul-petróleo escura + destaque âmbar.
+   Todo o layout é feito com Flexbox.
+   ========================================================== */
+
+:root {
+  --bg: #0f1720;
+  --surface: #17222e;
+  --surface-hover: #213141;
+  --line: #2a3a4a;
+  --text: #eef3f7;
+  --text-soft: #9fb0bf;
+  --accent: #ffb020;
+  --accent-ink: #1d1400;
+
+  --topbar-h: 60px;
+  --sidebar-w: 220px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Cabeçalho ---------- */
+.topbar {
+  position: sticky; /* gruda no topo ao rolar */
+  top: 0;
+  z-index: 10;
+  height: var(--topbar-h);
+  padding: 0 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* início | busca | ações */
+  gap: 16px;
+}
+
+.topbar__start,
+.topbar__end {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar__start {
+  flex: 0 0 var(--sidebar-w);
+}
+
+.topbar__end {
+  flex: 0 0 var(--sidebar-w);
+  justify-content: flex-end;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--surface-hover);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo__mark {
+  width: 30px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--accent);
+  position: relative;
+}
+
+/* triângulo de "play" feito com bordas */
+.logo__mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  border-left: 8px solid var(--accent-ink);
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.logo__name {
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+/* Busca: input cresce (flex: 1) e o botão fica com largura fixa */
+.search {
+  flex: 1 1 auto;
+  max-width: 600px;
+  display: flex;
+}
+
+.search__input {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  padding: 0 16px;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-right: 0;
+  border-radius: 20px 0 0 20px;
+}
+
+.search__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.search__btn {
+  flex: 0 0 64px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0 20px 20px 0;
+}
+
+.search__btn:hover {
+  background: var(--surface-hover);
+}
+
+/* Avatares (usados no topo e nos vídeos) */
+.avatar {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.avatar--me {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.avatar--a { background: #2f7de1; }
+.avatar--b { background: #1e9e8a; }
+.avatar--c { background: #8a5cd6; }
+.avatar--d { background: #d6553f; }
+.avatar--e { background: #2f7de1; }
+.avatar--f { background: #1e9e8a; }
+.avatar--g { background: #8a5cd6; }
+.avatar--h { background: #d6553f; }
+
+/* ---------- Estrutura: menu lateral + conteúdo ---------- */
+.layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+.sidebar {
+  position: sticky;
+  top: var(--topbar-h);
+  flex: 0 0 var(--sidebar-w);
+  height: calc(100vh - var(--topbar-h));
+  padding: 12px;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.nav-item:hover {
+  background: var(--surface-hover);
+}
+
+.nav-item--active {
+  background: var(--surface);
+  font-weight: 700;
+}
+
+.sidebar__divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 12px 0;
+}
+
+.content {
+  flex: 1; /* ocupa o espaço que sobra ao lado do menu */
+  min-width: 0;
+  padding: 0 24px 40px;
+}
+
+/* ---------- Filtros ---------- */
+.chips {
+  position: sticky;
+  top: var(--topbar-h);
+  z-index: 5;
+  padding: 12px 0;
+  background: var(--bg);
+
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: 0 0 auto; /* não encolhe: a rolagem horizontal cuida do excesso */
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.chip:hover {
+  background: var(--surface-hover);
+}
+
+.chip--active {
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.chip--active:hover {
+  background: var(--text);
+}
+
+/* ---------- Grade de vídeos ----------
+   flex-wrap quebra a linha e flex: 1 1 280px faz cada card
+   crescer, encolher e partir de uma base de 280px.
+   max-width evita que a última linha estique demais. */
+.videos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 16px;
+  padding-top: 8px;
+}
+
+.video {
+  flex: 1 1 280px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- Miniaturas (feitas só com CSS) ---------- */
+.thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centraliza o texto da arte */
+}
+
+.thumb__art {
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.2vw, 1.9rem);
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s;
+}
+
+.thumb:hover .thumb__art {
+  transform: scale(1.06);
+}
+
+.thumb__time {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.thumb--a { background: linear-gradient(135deg, #1d4ed8, #0ea5e9); }
+.thumb--b { background: linear-gradient(135deg, #0f766e, #22c55e); }
+.thumb--c { background: linear-gradient(135deg, #6d28d9, #ec4899); }
+.thumb--d { background: linear-gradient(135deg, #b91c1c, #f97316); }
+.thumb--e { background: linear-gradient(135deg, #0369a1, #6366f1); }
+.thumb--f { background: linear-gradient(135deg, #115e59, #38bdf8); }
+.thumb--g { background: linear-gradient(135deg, #7e22ce, #3b82f6); }
+.thumb--h { background: linear-gradient(135deg, #9a3412, #eab308); }
+
+/* ---------- Informações do vídeo ---------- */
+.video__info {
+  display: flex;
+  gap: 12px;
+}
+
+.video__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.video__title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video__meta {
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 960px) {
+  .topbar__start,
+  .topbar__end {
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 0 12px 32px;
+  }
+
+  .video {
+    max-width: none;
+  }
+
+  .topbar__end .icon-btn {
+    display: none;
+  }
+
+  .logo__name {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
